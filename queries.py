@@ -1,12 +1,13 @@
 import sqlite3
+import pandas as pd
 
-# Mit der Datenbank verbinden oder sie erstellen, falls sie nicht existiert
+# Mit der Datenbank verbinden
 connection = sqlite3.connect("CustomerSales.db")
 
-# Einen Cursor erstellen
+# Cursor erstellen
 cursor = connection.cursor()
 
-# Eine Abfrage ausführen
+# Erste Abfrage ausführen
 verkauf_kunde_produkt_region = (
     "SELECT verkauf.*, kunde.*, produkt.*, region.* "
     "FROM verkaufsregion "
@@ -15,14 +16,11 @@ verkauf_kunde_produkt_region = (
     "JOIN produkt ON verkaufsregion.produktID = produkt.produktID "
     "JOIN region ON verkaufsregion.regionID = region.regionID;"
 )
-cursor.execute(verkauf_kunde_produkt_region)
 
-# Daten aus der ausgeführten Abfrage abrufen
-ergebnisse = cursor.fetchall()
+result = pd.read_sql_query(verkauf_kunde_produkt_region, connection)
 
 # Die Ergebnisse anzeigen
-for zeile in ergebnisse:
-    print(zeile)
+print(result)
 
 # Den Cursor und die Verbindung schließen
 cursor.close()
