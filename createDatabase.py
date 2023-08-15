@@ -17,6 +17,7 @@ cursor.execute('DROP TABLE IF EXISTS verkauf')
 cursor.execute('DROP TABLE IF EXISTS produktmodell')
 cursor.execute('DROP TABLE IF EXISTS produktkategorie')
 cursor.execute('DROP TABLE IF EXISTS linienmodell')
+cursor.execute('DROP TABLE IF EXISTS verkaufsregion')
 
 # CREATE TABLE-Anweisungen mit Checks für TEXT-Datentyp
 cursor.execute('''
