@@ -6,9 +6,21 @@ conn = sqlite3.connect('CustomerSales.db')
 # create cursor object -> allows interaction with DB using sql
 cursor = conn.cursor()
 
+# Tabelle löschen (falls sie bereits existiert)
+cursor.execute('DROP TABLE IF EXISTS Kunden')
+cursor.execute('DROP TABLE IF EXISTS Produkte')
+cursor.execute('DROP TABLE IF EXISTS Regionen')
+cursor.execute('DROP TABLE IF EXISTS Linien')
+cursor.execute('DROP TABLE IF EXISTS Modelle')
+cursor.execute('DROP TABLE IF EXISTS Kategorien')
+cursor.execute('DROP TABLE IF EXISTS Verkauf')
+cursor.execute('DROP TABLE IF EXISTS Produktmodell')
+cursor.execute('DROP TABLE IF EXISTS Produktkategorie')
+cursor.execute('DROP TABLE IF EXISTS Linienmodell')
+
 # CREATE OR REPLACE TABLE-Anweisungen mit Checks für TEXT-Datentyp
 cursor.execute('''
-    CREATE TABLE OR REPLACE Kunden (
+    CREATE TABLE Kunden (
         KundenID INTEGER PRIMARY KEY,
         Geburtstag DATE NOT NULL,
         Vorname TEXT NOT NULL,
@@ -25,7 +37,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE OR REPLACE Produkte (
+    CREATE TABLE Produkte (
         ProduktID INTEGER PRIMARY KEY,
         Produktname TEXT NOT NULL,
         Farbe TEXT NOT NULL CHECK(Farbe IN ('schwarz', 'weiss', 'grün', 'blau', 'rot', 'gelb', 'orange', 'violett', 'pink', 'braun', 'grau')),
@@ -36,7 +48,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE OR REPLACE Regionen (
+    CREATE TABLE Regionen (
         RegionID INTEGER PRIMARY KEY,
         Region TEXT NOT NULL CHECK(Region IN ('Baden-Württemberg', 'Hessen', 'Bayern', 'Nordrhein-Westfalen', 'Sachsen', 'Niedersachsen', 'Rheinland-Pfalz')),
         Land TEXT NOT NULL CHECK(Land IN ('Deutschland', 'Frankreich', 'Schweiz', 'Österreich', 'Italien', 'Spanien', 'Niederlande')),
@@ -46,7 +58,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE OR REPLACE Linien (
+    CREATE TABLE Linien (
         LinienID INTEGER PRIMARY KEY,
         LinienmodellID INTEGER,
         Linienbezeichnung TEXT NOT NULL,
@@ -55,21 +67,21 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE OR REPLACE Modelle (
+    CREATE TABLE Modelle (
         ModellID INTEGER PRIMARY KEY,
         Modellname TEXT NOT NULL
     )
 ''')
 
 cursor.execute('''
-    CREATE TABLE OR REPLACE Kategorien (
+    CREATE TABLE Kategorien (
         KategorieID INTEGER PRIMARY KEY,
         Bezeichnung TEXT NOT NULL
     )
 ''')
 
 cursor.execute('''
-    CREATE TABLE OR REPLACE Verkauf (
+    CREATE TABLE Verkauf (
         VerkaufsID INTEGER PRIMARY KEY,
         KundenID INTEGER NOT NULL,
         ProduktID INTEGER NOT NULL,
@@ -83,7 +95,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE OR REPLACE Produktmodell (
+    CREATE TABLE Produktmodell (
         ProduktID INTEGER NOT NULL,
         ModellID INTEGER NOT NULL,
         PRIMARY KEY (ProduktID, ModellID),
@@ -93,7 +105,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE OR REPLACE Produktkategorie (
+    CREATE TABLE Produktkategorie (
         ProduktID INTEGER NOT NULL,
         KategorieID INTEGER NOT NULL,
         PRIMARY KEY (ProduktID, KategorieID),
@@ -103,7 +115,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE OR REPLACE Linienmodell (
+    CREATE TABLE Linienmodell (
         LinienmodellID INTEGER PRIMARY KEY,
         ModellID INTEGER NOT NULL
     )
