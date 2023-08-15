@@ -28,7 +28,7 @@ cursor.execute('''
         familienstand TEXT NOT NULL CHECK(familienstand IN ('L', 'V')),
         geschlecht TEXT NOT NULL CHECK(geschlecht IN ('M', 'W', 'D')),
         jahreseinkommen INTEGER NOT NULL,
-        bildungsstand TEXT NOT NULL CHECK(bildungsstand IN ('Bachelor', 'Schulabschluss', 'Oberschule', 'unvollständiger Abschluss', 'unvollständige Oberschule')),
+        bildungsstand TEXT NOT NULL CHECK(bildungsstand IN ('Bachelor', 'Schulabschluss', 'Oberschule', 'unvollstaendiger Abschluss', 'unvollstaendige Oberschule')),
         beruf TEXT NOT NULL CHECK(beruf IN ('Sachbearbeiter', 'Profi', 'Fachmann', 'Management', 'Handwerker')),
         hausbesitzer BOOLEAN NOT NULL,
         anzahl_autos INTEGER NOT NULL,
@@ -59,7 +59,7 @@ cursor.execute('''
 
 cursor.execute('''
     CREATE TABLE linie (
-        linieID INTEGER PRIMARY KEY,
+        linienID INTEGER PRIMARY KEY,
         linienbezeichnung TEXT NOT NULL
     )
 ''')
@@ -80,13 +80,28 @@ cursor.execute('''
 
 cursor.execute('''
     CREATE TABLE verkauf (
-        verkaufsID TEXT PRIMARY KEY,
+        verkaufsID TEXT NOT NULL,
         datum DATE NOT NULL,
         anzahl INTEGER NOT NULL,
         kundenID INTEGER NOT NULL,
         produktID INTEGER NOT NULL,
+        PRIMARY KEY (verkaufsID, kundenID, produktID),
         FOREIGN KEY (kundenID) REFERENCES kunde(kundenID),
         FOREIGN KEY (produktID) REFERENCES produkt(produktID)
+    )
+''')
+
+cursor.execute('''
+    CREATE TABLE verkaufsregion (
+        verkaufsID TEXT NOT NULL,
+        kundenID INTEGER NOT NULL,
+        produktID INTEGER NOT NULL,
+        regionID INTEGER NOT NULL,
+        PRIMARY KEY (verkaufsID, kundenID, produktID, regionID),
+        FOREIGN KEY (verkaufsID) REFERENCES verkauf(verkaufsID),
+        FOREIGN KEY (kundenID) REFERENCES kunde(kundenID),
+        FOREIGN KEY (produktID) REFERENCES produkt(produktID),
+        FOREIGN KEY (regionID) REFERENCES region(regionID)
     )
 ''')
 
@@ -113,13 +128,13 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE linienmodell (
         modellID INTEGER NOT NULL,
-        linielID INTEGER NOT NULL,
-        PRIMARY KEY (modellID, linielID),
+        linienID INTEGER NOT NULL,
+        PRIMARY KEY (modellID, linienID),
         FOREIGN KEY (modellID) REFERENCES modell(modellID),
-        FOREIGN KEY (linielID) REFERENCES linie(linielID)
+        FOREIGN KEY (linienID) REFERENCES linie(linienID)
     )
 ''')
 
-# Änderungen bestätigen und Verbindung schließen
+# aenderungen bestaetigen und Verbindung schließen
 conn.commit()
 conn.close()
