@@ -81,7 +81,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE Verkauf (
+    CREATE TABLE verkauf (
         VerkaufsID INTEGER PRIMARY KEY,
         KundenID INTEGER NOT NULL,
         ProduktID INTEGER NOT NULL,
@@ -95,7 +95,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE Produktmodell (
+    CREATE TABLE produktmodell (
         ProduktID INTEGER NOT NULL,
         ModellID INTEGER NOT NULL,
         PRIMARY KEY (ProduktID, ModellID),
@@ -105,7 +105,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE Produktkategorie (
+    CREATE TABLE produktkategorie (
         ProduktID INTEGER NOT NULL,
         KategorieID INTEGER NOT NULL,
         PRIMARY KEY (ProduktID, KategorieID),
@@ -115,7 +115,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE Linienmodell (
+    CREATE TABLE linienmodell (
         LinienmodellID INTEGER PRIMARY KEY,
         ModellID INTEGER NOT NULL
     )
