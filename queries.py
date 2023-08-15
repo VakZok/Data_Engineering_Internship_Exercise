@@ -1,22 +1,29 @@
 import sqlite3
 
-# Connect to the database or create if it doesn't exist
+# Mit der Datenbank verbinden oder sie erstellen, falls sie nicht existiert
 connection = sqlite3.connect("CustomerSales.db")
 
-# Create a cursor
+# Einen Cursor erstellen
 cursor = connection.cursor()
 
-# Execute a query
-query = "SELECT * FROM kunde;"
-cursor.execute(query)
+# Eine Abfrage ausführen
+verkauf_kunde_produkt_region = (
+    "SELECT verkauf.*, kunde.*, produkt.*, region.* "
+    "FROM verkaufsregion "
+    "JOIN verkauf ON verkaufsregion.verkaufsID = verkauf.verkaufsID "
+    "JOIN kunde ON verkaufsregion.kundenID = kunde.kundenID "
+    "JOIN produkt ON verkaufsregion.produktID = produkt.produktID "
+    "JOIN region ON verkaufsregion.regionID = region.regionID;"
+)
+cursor.execute(verkauf_kunde_produkt_region)
 
-# Fetch data from the executed query
-results = cursor.fetchall()
+# Daten aus der ausgeführten Abfrage abrufen
+ergebnisse = cursor.fetchall()
 
-# Print the results
-for row in results:
-    print(row)
+# Die Ergebnisse anzeigen
+for zeile in ergebnisse:
+    print(zeile)
 
-# Close the cursor and the connection
+# Den Cursor und die Verbindung schließen
 cursor.close()
 connection.close()
