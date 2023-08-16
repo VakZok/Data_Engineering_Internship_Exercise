@@ -44,11 +44,11 @@ kunde_mit_häufigste_Bestellungen = (
 kunde_mit_häufigste_Bestellungen_ergebnis = pd.read_sql_query(kunde_mit_häufigste_Bestellungen, connection)
 
 # Die Ergebnisse anzeigen
-print("Query 1: Übersicht aller Verkäufe + Kunden-, Produkt-, und Regionsinformationen: \n")
+print("Query 1: Übersicht aller Verkäufe + Kunden-, Produkt-, und Regionsinformationen:")
 print(verkauf_kunde_produkt_region_ergebnis)
-print("Query 3: Produkte, die ein Modell besitzen, aber keine Produktlinie: \n")
+print("\nQuery 3: Produkte, die ein Modell besitzen, aber keine Produktlinie:")
 print(produkte_mit_Modell_ohne_Linie_ergebnis)
-print("Query 4: Der Kunde / die Kundin, der/die am häufigsten Bestellungne aufgegeben hat: \n")
+print("\nQuery 4: Der Kunde / die Kundin, der/die am häufigsten Bestellungne aufgegeben hat:")
 print(kunde_mit_häufigste_Bestellungen_ergebnis)
 
 # Den Cursor und die Verbindung schließen
