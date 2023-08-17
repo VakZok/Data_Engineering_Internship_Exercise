@@ -6,20 +6,20 @@ conn = sqlite3.connect('CustomerSales.db')
 # Cursor-Objekt erstellen -> ermöglicht die Interaktion mit der DB über SQL
 cursor = conn.cursor()
 
-# Tabellen löschen (falls sie bereits existieren)
-cursor.execute('DROP TABLE IF EXISTS kunde')
-cursor.execute('DROP TABLE IF EXISTS produkt')
-cursor.execute('DROP TABLE IF EXISTS region')
-cursor.execute('DROP TABLE IF EXISTS linie')
-cursor.execute('DROP TABLE IF EXISTS modell')
-cursor.execute('DROP TABLE IF EXISTS kategorie')
-cursor.execute('DROP TABLE IF EXISTS verkauf')
-cursor.execute('DROP TABLE IF EXISTS produktmodell')
-cursor.execute('DROP TABLE IF EXISTS produktkategorie')
-cursor.execute('DROP TABLE IF EXISTS linienmodell')
-cursor.execute('DROP TABLE IF EXISTS verkaufsregion')
 
-# CREATE TABLE-Anweisungen mit Checks für TEXT-Datentyp
+### Relevant, falls DB neu aufgesetzt werden soll
+# Alle Tabellen-Namen aus der Datenbank abrufen
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+tables = cursor.fetchall()
+
+# Bereits vorhandene Tabellen löschen -> DB frisch aufsetzten
+for table in tables:
+    table_name = table[0]
+    drop_table_sql = f"DROP TABLE IF EXISTS {table_name};"
+    cursor.execute(drop_table_sql)
+
+
+# Erstellung der Tabellen
 cursor.execute('''
     CREATE TABLE kunde (
         kundenID INTEGER PRIMARY KEY,
@@ -136,6 +136,8 @@ cursor.execute('''
     )
 ''')
 
-# aenderungen bestaetigen und Verbindung schließen
+# Änderungen bestätigen und Verbindung schließen
 conn.commit()
 conn.close()
+
+print("Database setup successfully.")

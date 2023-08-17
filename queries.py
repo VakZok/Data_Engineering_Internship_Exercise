@@ -31,7 +31,7 @@ produkte_mit_Modell_ohne_Linie = (
 
 produkte_mit_Modell_ohne_Linie_ergebnis = pd.read_sql_query(produkte_mit_Modell_ohne_Linie, connection)
 
-# Query 4: Der Kunde / die Kundin, der/die am häufigsten Bestellungne aufgegeben hat
+# Query 4: Der Kunde / die Kundin, der/die am häufigsten Bestellungen aufgegeben hat
 kunde_mit_häufigste_Bestellungen = (
     "SELECT kunde.*, COUNT(verkauf.verkaufsID) AS anzahl_bestellungen "
     "FROM kunde "
@@ -48,8 +48,9 @@ print("Query 1: Übersicht aller Verkäufe + Kunden-, Produkt-, und Regionsinfor
 print(verkauf_kunde_produkt_region_ergebnis)
 print("\nQuery 3: Produkte, die ein Modell besitzen, aber keine Produktlinie:")
 print(produkte_mit_Modell_ohne_Linie_ergebnis)
-print("\nQuery 4: Der Kunde / die Kundin, der/die am häufigsten Bestellungne aufgegeben hat:")
+print("\nQuery 4: Der Kunde / die Kundin, der/die am häufigsten Bestellungen aufgegeben hat:")
 print(kunde_mit_häufigste_Bestellungen_ergebnis)
+print("\nQueries done.")
 
 # Den Cursor und die Verbindung schließen
 cursor.close()
